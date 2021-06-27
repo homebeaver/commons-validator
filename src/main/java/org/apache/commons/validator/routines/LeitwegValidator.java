@@ -48,7 +48,9 @@ public class LeitwegValidator {
     private static final char MINUS = '\u002D'; // '-' Separator
     
     private static final Validator DEFAULT_FORMAT =
-            new Validator("^(\\d{2})((\\d)((\\d{2})(\\d{3}|\\d{4}|\\d{7})?)?)?(-([A-Za-z0-9]{1,30}))?-(\\d{2})$");
+    	new Validator("^(01|02|03|04|05|06|07|08|09|10|11|12|13|14|16|99)((\\d)((\\d{2})(\\d{3}|\\d{4}|\\d{7})?)?)?"
+    			+"(-([A-Za-z0-9]{1,30}))?" // optional alphanumeric detail
+    			+"-(\\d{2})$");            // two mandatory check digits
 
     /*
      * in theory the shortest Leitweg-ID has a minimal general part and check digits  

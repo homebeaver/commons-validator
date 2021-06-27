@@ -31,13 +31,13 @@ import org.apache.commons.validator.routines.checkdigit.Mod97CheckDigit;
  * <A HREF="https://www.xoev.de/">KoSIT</A>.
  * 
  *  In short: there are three parts separated by "-" HYPHEN-MINUS
- * <br/>
+ * <br>
  * - a mandatory numeric general starting with two chars region id, "02" for Hamburg, "99" for federal institutons
- * <br/>
+ * <br>
  * - an optional alphanumeric detail 
- * <br/>
+ * <br>
  * - two mandatory check digits calculated according to modulus 97 algorithm
- * <br/>
+ * <br>
  * 
  * Example: <code>992-90009-96</code> for         Deutsche Bahn AG
  */

@@ -42,8 +42,8 @@ public class LEIValidator {
 
     private static final Validator DEFAULT_FORMAT =
      new Validator( new String[]
-    	{ "^(\\d{4})([A-Z0-9]{14})(\\d{2})$" // (LOU)(two reserved + LEI)(two mandatory check digits)
-    	, "^([A-Z0-9]{18})(\\d{2})$"         // old Style
+       { "^(\\d{4})([A-Z0-9]{14})(\\d{2})$" // (LOU)(two reserved + LEI)(two mandatory check digits)
+       , "^([A-Z0-9]{18})(\\d{2})$"         // old Style
      });
 
     private static final int MIN_CODE_LEN = 20;

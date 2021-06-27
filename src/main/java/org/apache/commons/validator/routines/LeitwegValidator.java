@@ -16,7 +16,7 @@
  */
 package org.apache.commons.validator.routines;
 
-import org.apache.commons.validator.routines.checkdigit.Mod97_10CheckDigit;
+import org.apache.commons.validator.routines.checkdigit.Mod97CheckDigit;
 
 /**
  * Leitweg Validator.
@@ -39,7 +39,7 @@ import org.apache.commons.validator.routines.checkdigit.Mod97_10CheckDigit;
  * - two mandatory check digits calculated according to modulus 97 algorithm
  * <br/>
  * 
- * Example: <code>992-90009-96</code> for	        Deutsche Bahn AG
+ * Example: <code>992-90009-96</code> for         Deutsche Bahn AG
  */
 public class LeitwegValidator {
 
@@ -48,13 +48,13 @@ public class LeitwegValidator {
     private static final char MINUS = '\u002D'; // '-' Separator
     
     private static final Validator DEFAULT_FORMAT =
-    	new Validator("^(01|02|03|04|05|06|07|08|09|10|11|12|13|14|16|99)((\\d)((\\d{2})(\\d{3}|\\d{4}|\\d{7})?)?)?"
-    			+"(-([A-Za-z0-9]{1,30}))?" // optional alphanumeric detail
-    			+"-(\\d{2})$");            // two mandatory check digits
+     new Validator("^(01|02|03|04|05|06|07|08|09|10|11|12|13|14|16|99)((\\d)((\\d{2})(\\d{3}|\\d{4}|\\d{7})?)?)?"
+       +"(-([A-Za-z0-9]{1,30}))?" // optional alphanumeric detail
+       +"-(\\d{2})$");            // two mandatory check digits
 
     /*
      * in theory the shortest Leitweg-ID has a minimal general part and check digits  
-     * 	<code>99-92</code>
+     *  <code>99-92</code>
      */
     private static final int MIN_CODE_LEN = 5;
     
@@ -98,7 +98,7 @@ public class LeitwegValidator {
      * Create a default format validator.
      */
     public LeitwegValidator() {
-    	this.formatValidator = DEFAULT_FORMAT;
+        this.formatValidator = DEFAULT_FORMAT;
     }
 
     /**
@@ -109,7 +109,7 @@ public class LeitwegValidator {
      */
     public boolean isValid(String id) {
 
-    	id = id.trim();
+        id = id.trim();
         if (id == null || id.length() > MAX_CODE_LEN|| id.length() < MIN_CODE_LEN) {
             return false;
         }
@@ -118,11 +118,11 @@ public class LeitwegValidator {
         // der RegexValidator kann mehrere pattern prüfen!!!
         if(!formatValidator.validator.isValid(id)) return false;
 
-        return Mod97_10CheckDigit.MOD_CHECK_DIGIT.isValid(removeMinus(id));
+        return Mod97CheckDigit.MOD_CHECK_DIGIT.isValid(removeMinus(id));
     }
 
     private String removeMinus(String id) {
-    	return id.replace(""+MINUS, "");
+        return id.replace(""+MINUS, "");
     }
     
     /**
@@ -131,7 +131,7 @@ public class LeitwegValidator {
      * If valid, this method returns the Leitweg-ID with
      * formatting characters removed (i.e. hyphen).
      *
-     * @param id The Leitweg-ID to validate.
+     * @param code The Leitweg-ID to validate.
      * @return A Leitweg-ID without hyphen if valid, otherwise <code>null</code>.
      * 
      * <p>

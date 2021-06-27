@@ -30,25 +30,23 @@ import java.util.logging.Logger;
  * <p>
  * This MOD 97-10 module can also be used to validate the LEI (Legal Entity Identifier), ICD id 0199
  */
-public class Mod97_10CheckDigit implements CheckDigit, Serializable {
+public class Mod97CheckDigit implements CheckDigit, Serializable {
 
     private static final int MIN_CODE_LEN = 4;
 
-	private static final long serialVersionUID = -6006627136518535270L;
+    private static final long serialVersionUID = -6006627136518535270L;
 
     private static final int MAX_ALPHANUMERIC_VALUE = 35; // Character.getNumericValue('Z')
     
     /** Singleton instance */
-    public static final CheckDigit MOD_CHECK_DIGIT = new Mod97_10CheckDigit();
+    public static final CheckDigit MOD_CHECK_DIGIT = new Mod97CheckDigit();
 
     private static final long MAX = 999999999;
 
     private static final long MODULUS = 97;
     
-	private static final Logger LOG = Logger.getLogger(Mod97_10CheckDigit.class.getName());
+    private static final Logger LOG = Logger.getLogger(Mod97CheckDigit.class.getName());
 
-//	private static final char MINUS = '\u002D'; // '-' Separator
-	
     /**
      * Calculate the <i>Check Digit</i> for a code.
      * <p>
@@ -60,8 +58,8 @@ public class Mod97_10CheckDigit implements CheckDigit, Serializable {
      * @throws CheckDigitException if an error occurs calculating
      * the check digit for the specified code
      */
-	@Override
-	public String calculate(String code) throws CheckDigitException {
+    @Override
+    public String calculate(String code) throws CheckDigitException {
         if (code == null || code.length() < MIN_CODE_LEN) {
             throw new CheckDigitException("Invalid Code length=" +
                     (code == null ? 0 : code.length()));
@@ -72,7 +70,7 @@ public class Mod97_10CheckDigit implements CheckDigit, Serializable {
         int charValue = (98 - modulusResult); // CHECKSTYLE IGNORE MagicNumber
         String checkDigit = Integer.toString(charValue);
         return (charValue > 9 ? checkDigit : "0" + checkDigit); // CHECKSTYLE IGNORE MagicNumber
-	}
+}
 
     /**
      * Validate the check digit.
@@ -81,8 +79,8 @@ public class Mod97_10CheckDigit implements CheckDigit, Serializable {
      * @return <code>true</code> if the check digit is valid, otherwise
      * <code>false</code>
      */
-	@Override
-	public boolean isValid(String code) {
+    @Override
+    public boolean isValid(String code) {
         if (code == null || code.length() < MIN_CODE_LEN) {
             return false;
         }
@@ -96,10 +94,8 @@ public class Mod97_10CheckDigit implements CheckDigit, Serializable {
             return (modulusResult == 1);
         } catch (CheckDigitException ex) { 
             return false;
-//        } catch (NumberFormatException | ArithmeticException ex) { 
-//            return false;
         }
-	}
+    }
 
     /**
      * Calculate the modulus for an id.
@@ -112,7 +108,6 @@ public class Mod97_10CheckDigit implements CheckDigit, Serializable {
         long total = 0;
         for (int i = 0; i < reformattedCode.length(); i++) {
             char c = reformattedCode.charAt(i);
-//        	if (c==MINUS) continue;
             int charValue = Character.getNumericValue(c);
             if (charValue < 0 || charValue > MAX_ALPHANUMERIC_VALUE) {
                 throw new CheckDigitException("Invalid Character[" +

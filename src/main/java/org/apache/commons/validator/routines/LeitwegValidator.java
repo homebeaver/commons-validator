@@ -16,6 +16,8 @@
  */
 package org.apache.commons.validator.routines;
 
+import java.util.logging.Logger;
+
 import org.apache.commons.validator.routines.checkdigit.Mod97CheckDigit;
 
 /**
@@ -42,6 +44,8 @@ import org.apache.commons.validator.routines.checkdigit.Mod97CheckDigit;
  * Example: <code>992-90009-96</code> for         Deutsche Bahn AG
  */
 public class LeitwegValidator {
+
+	private static final Logger LOG = Logger.getLogger(LeitwegValidator.class.getName());
 
     private final Validator formatValidator;
 
@@ -101,6 +105,10 @@ public class LeitwegValidator {
         this.formatValidator = DEFAULT_FORMAT;
     }
 
+    public RegexValidator getFormatValidator() {
+    	return formatValidator.validator;
+    }
+
     /**
      * Validate a Leitweg-ID
      *
@@ -111,13 +119,17 @@ public class LeitwegValidator {
 
         id = id.trim();
         if (id == null || id.length() > MAX_CODE_LEN|| id.length() < MIN_CODE_LEN) {
+            LOG.warning("format length error for "+id);
             return false;
         }
         
         // format check:
         // der RegexValidator kann mehrere pattern prüfen!!!
-        if(!formatValidator.validator.isValid(id)) return false;
-
+        if(!formatValidator.validator.isValid(id)) {
+            LOG.warning("format "+id+" is NOT valid.");
+        	return false;
+        }
+        LOG.info("format "+id+" isValid.");
         return Mod97CheckDigit.MOD_CHECK_DIGIT.isValid(removeMinus(id));
     }
 
